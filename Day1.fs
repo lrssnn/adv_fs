@@ -1,27 +1,41 @@
 module adv_fs.Day1
 
+open System
 open System.IO
+open FSharpx.String
 
 type Day1() =
-    let input = File.ReadAllText "input/input01"
-    //let input = "91212129"
+    let input = trim (File.ReadAllText "input/input01.txt")
 
-    let numList =
-        Seq.map (fun c -> int (System.Char.GetNumericValue c)) (input.ToCharArray())
-        |> Seq.toList
+    let lists input =
+        input
+        |> splitChar [| '\n' |]
+        |> Array.map (splitString' [| "   " |] 2 StringSplitOptions.None)
+        |> Array.map (fun arr -> (int arr[0], int arr[1]))
+        |> Array.unzip
 
-    let indices length offset =
-        List.map (fun ind -> (ind, (ind + offset) % length)) [ 0 .. (length - 1) ]
+    let solve a b =
+        let a = Array.sort a
+        let b = Array.sort b
+        let pairs = Array.zip a b
+        pairs |> Array.map (fun (x, y) -> abs (y - x)) |> Array.sum
 
-    let solve (nums: int list) offset =
-        List.map (fun (a, b) -> (nums[a], nums[b])) (indices nums.Length offset)
-        |> List.filter (fun (a, b) -> a = b)
-        |> List.sumBy fst
+    let solve2 (a: int array) (b: int array) =
+        let matches = b |> Array.countBy id |> Map
+
+        a
+        |> Array.map (fun num -> num * (Map.tryFind num matches |> Option.defaultValue 0))
+        |> Array.sum
 
     interface Day with
         member this.DayName = "01"
-        member this.answer1 = "1171"
-        member this.answer2 = "1024"
+        member this.answer1 = "1222801"
+        member this.answer2 = "22545250"
 
-        member this.part1 = string (solve numList 1)
-        member this.part2 = string (solve numList (numList.Length / 2))
+        member this.part1() =
+            let (a, b) = lists input
+            string (solve a b)
+
+        member this.part2() =
+            let (a, b) = lists input
+            string (solve2 a b)
