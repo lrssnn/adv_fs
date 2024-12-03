@@ -4,7 +4,7 @@ open System.Diagnostics
 open adv_fs
 open Day1
 open Day2
-// open Day3
+open Day3
 
 let validate expected actual : char = if expected = actual then '✓' else 'x'
 
@@ -26,11 +26,7 @@ let doDay (day: Day) : unit =
     printf $"{(formatOutput ans2 day.answer2 time2)}"
     printfn $" 1: {ans1} 2: {ans2}"
 
-let days: Day list =
-    [ new Day1()
-      new Day2()
-      //new Day3()
-      ]
+let days: Day list = [ new Day1(); new Day2(); new Day3() ]
 
 printfn "+-----+---------------+---------------+"
 printfn "| Day |       1       |       2       |"
