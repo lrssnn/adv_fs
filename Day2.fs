@@ -1,12 +1,9 @@
 module adv_fs.Day2
 
-open System.IO
-open FSharpx.String
+open Puz.Input
 
 type Day2() =
-    let input = trim (File.ReadAllText "input/input02.txt")
-
-    let reports input = Input.readLinesAsInts input ' '
+    let reports = readLinesAsInts "input/input02.txt" ' '
 
     // Validity rule on a report (a sequence of ints)
     // All differences must be between 1 and 3, in one direction for the whole list
@@ -35,6 +32,6 @@ type Day2() =
         member this.answer1 = "279"
         member this.answer2 = "343"
 
-        member this.part1() = string (solve false (reports input))
+        member this.part1() = string (solve false reports)
 
-        member this.part2() = string (solve true (reports input))
+        member this.part2() = string (solve true reports)

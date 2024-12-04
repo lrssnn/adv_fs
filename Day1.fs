@@ -1,11 +1,11 @@
 module adv_fs.Day1
 
 open System
-open System.IO
+open Puz.Input
 open FSharpx.String
 
 type Day1() =
-    let input = trim (File.ReadAllText "input/input01.txt")
+    let input = readText "input/input01.txt"
 
     let lists input =
         input

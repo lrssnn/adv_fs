@@ -1,10 +1,10 @@
 module adv_fs.Day3
 
-open System.IO
+open Puz.Input
 open System.Text.RegularExpressions
 
 type Day3() =
-    let input = File.ReadAllText "input/input03.txt"
+    let input = readText "input/input03.txt"
 
     /// Remove everything between a don't() and a do()
     /// .*? is a non-greedy version of .*, which makes don't()xdo()ydo() remove
