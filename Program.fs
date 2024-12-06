@@ -7,6 +7,7 @@ open Day2
 open Day3
 open Day4
 open Day5
+open Day6
 
 let validate expected actual : char = if expected = actual then '✓' else 'x'
 
@@ -28,7 +29,8 @@ let doDay (day: Day) : unit =
     printf $"{(formatOutput ans2 day.answer2 time2)}"
     printfn $" 1: {ans1} 2: {ans2}"
 
-let days: Day list = [ new Day1(); new Day2(); new Day3(); new Day4(); new Day5() ]
+let days: Day list =
+    [ new Day1(); new Day2(); new Day3(); new Day4(); new Day5(); new Day6() ]
 
 printfn "+-----+---------------+---------------+"
 printfn "| Day |       1       |       2       |"
