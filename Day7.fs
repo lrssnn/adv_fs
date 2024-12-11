@@ -49,7 +49,7 @@ type Day7() =
         |> Array.sumBy fst
 
     interface Day with
-        member this.DayName = "06"
+        member this.DayName = "07"
         member this.answer1 = "1298103531759"
         member this.answer2 = "140575048428831"
 
