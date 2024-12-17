@@ -2,7 +2,7 @@
 
 open System.Diagnostics
 open adv_fs
-open Day13
+open Day17
 
 let validate expected actual : char = if expected = actual then '✓' else 'x'
 
@@ -34,7 +34,7 @@ let days: Day list =
     //   new Day7()
     //   new Day8()
     //   new Day9()
-    [ new Day13() ]
+    [ new Day17() ]
 
 
 printfn "+-----+---------------+---------------+"
