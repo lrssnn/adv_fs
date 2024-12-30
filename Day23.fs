@@ -51,43 +51,36 @@ type Day23() =
                 network |> Map.add a aDests |> Map.add b bDests)
             Map.empty
 
-    let rec detectLoop (start: string) (acc: string list) (network: Map<string, string list>) : string list list =
-        if acc.Length > 1 && acc.Head = start then
-            [ acc ]
-        else
+    let connectsTo network a b =
+        network |> Map.find a |> List.contains b
+
+    let findTriplesFrom network (from: string) =
+        network
+        |> Map.find from
+        |> List.collect (fun first ->
             network
-            |> Map.find acc.Head
-            |> List.collect (fun dest -> detectLoop start (dest :: acc) network)
-
-    let addAll set list =
-        list |> List.fold (fun s e -> Set.add e s) set
-
-    let rec collectNetwork network seed segment queue =
-        let q = addAll queue (Map.find seed network)
-        let toProcess = Set.difference q segment
-
-        if Set.isEmpty toProcess then
-            // We have collected all the elements
-            segment
-        else
-            // We haven't, pop an element from the queue and ???
-            let next = toProcess.MinimumElement
-            collectNetwork network next (Set.add next segment) toProcess
+            |> Map.find first
+            |> List.choose (fun second ->
+                if connectsTo network from second then
+                    Some([ from; first; second ] |> List.sort)
+                else
+                    None))
 
     interface Day with
         member this.DayName = "23"
-        member this.answer1 = "?"
+        member this.answer1 = "1358"
         member this.answer2 = "?"
 
 
         member this.part1() =
-            let network = parseNetwork testInput
+            let network = parseNetwork input
 
             let loops =
-                network.Keys
-                |> Seq.map (fun start -> collectNetwork network start Set.empty Set.empty)
-                |> List.ofSeq
+                network |> Map.keys |> Seq.collect (findTriplesFrom network) |> Set.ofSeq
 
-            "!"
+            loops
+            |> Set.filter (fun l -> l |> List.exists (fun com -> com.StartsWith("t")))
+            |> Set.count
+            |> string
 
         member this.part2() = "!"
